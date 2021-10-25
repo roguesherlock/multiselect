@@ -107,6 +107,21 @@
   }
 }
 
+.multiselect-tag-search {
+  background: var(--ms-tag-bg, #10B981);
+  color: var(--ms-tag-color, #FFFFFF);
+  font-size: var(--ms-tag-font-size, 0.875rem);
+  line-height: var(--ms-tag-line-height, 1.25rem);
+  font-weight: var(--ms-tag-font-weight, 600);
+  padding: var(--ms-tag-py, 0.125rem) var(--ms-tag-px, 0.5rem);
+  margin-left: var(--ms-tag-mx, 0.5rem);
+  margin-right: var(--ms-tag-mx, 0.5rem);
+  border-radius: var(--ms-tag-radius, 4px);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
 .multiselect-tag-remove {
   display: flex;
   align-items: center;
@@ -114,7 +129,7 @@
   padding: var(--ms-tag-remove-py, 0.25rem) var(--ms-tag-remove-px, 0.25rem);
   margin: var(--ms-tag-remove-my, 0rem) var(--ms-tag-remove-mx, 0.125rem);
   border-radius: var(--ms-tag-remove-radius, 4px);
-  
+
   &:hover {
     background: #00000010;
   }

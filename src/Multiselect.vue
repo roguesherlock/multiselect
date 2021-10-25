@@ -45,13 +45,13 @@
             </span>
           </span>
         </slot>
-    
+
         <div :class="classList.tagsSearchWrapper">
           <!-- Used for measuring search width -->
           <span :class="classList.tagsSearchCopy">{{ search }}</span>
 
           <!-- Actual search input -->
-          <input    
+          <input
             v-if="searchable && !disabled"
             :type="inputType"
             :modelValue="search"
@@ -159,7 +159,13 @@
             @click="handleOptionClick(option)"
           >
             <slot name="option" :option="option" :search="search">
-              <span>{{ option[label] }}</span>
+              <template v-if="option.newTag && !option.created">
+                <span>Create</span>
+                <span :class="classList.tagSearch">
+                  {{option[label]}}
+                </span>
+              </template>
+              <span v-else>{{ option[label] }}</span>
             </slot>
           </li>
         </template>
@@ -178,7 +184,7 @@
 
     <!-- Hacky input element to show HTML5 required warning -->
     <input v-if="required" :class="classList.fakeInput" tabindex="-1" :value="textValue" required/>
-    
+
     <!-- Native input support -->
     <template v-if="nativeSupport">
       <input v-if="mode == 'single'" type="hidden" :name="name" :value="plainValue !== undefined ? plainValue : ''" />
@@ -202,13 +208,13 @@
   import usePointerAction from './composables/usePointerAction'
   import useDropdown from './composables/useDropdown'
   import useMultiselect from './composables/useMultiselect'
-  import useKeyboard from './composables/useKeyboard' 
-  import useClasses from './composables/useClasses' 
+  import useKeyboard from './composables/useKeyboard'
+  import useClasses from './composables/useClasses'
 
   export default {
     name: 'Multiselect',
     emits: [
-      'open', 'close', 'select', 'deselect', 
+      'open', 'close', 'select', 'deselect',
       'input', 'search-change', 'tag', 'update:modelValue',
       'change', 'clear'
     ],
@@ -438,7 +444,7 @@
       }
     },
     setup(props, context)
-    { 
+    {
       const value = useValue(props, context)
       const pointer = usePointer(props, context)
       const dropdown = useDropdown(props, context)

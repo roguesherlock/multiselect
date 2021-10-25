@@ -42,6 +42,10 @@
   }
 }
 
+.multiselect-tag-search {
+  @apply bg-green-500 text-white text-sm font-semibold py-0.5 px-2 mx-2 rounded flex items-center whitespace-nowrap;
+}
+
 .multiselect-tag-remove {
   @apply flex items-center justify-center p-1 mx-0.5 rounded-sm hover:bg-black hover:bg-opacity-10 group;
 }

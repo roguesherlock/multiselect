@@ -6,7 +6,7 @@ import arraysEqual from './../utils/arraysEqual'
 
 export default function useOptions (props, context, dep)
 {
-  const { 
+  const {
     options, mode, trackBy, limit, hideSelected, createTag, label,
     appendNewTag, multipleLabel, object, loading, delay, resolveOnLoad,
     minChars, filterResults, clearOnSearch, clearOnSelect, valueProp,
@@ -137,6 +137,8 @@ export default function useOptions (props, context, dep)
       [valueProp.value]: search.value,
       [label.value]: search.value,
       [trackBy.value]: search.value,
+      newTag: true,
+      created: false
     }]
   })
 
@@ -159,7 +161,7 @@ export default function useOptions (props, context, dep)
   // =============== METHODS ==============
 
   /**
-   * @param {array|object|string|number} option 
+   * @param {array|object|string|number} option
    */
   const select = (option) => {
     if (typeof option !== 'object') {
@@ -247,7 +249,7 @@ export default function useOptions (props, context, dep)
     if (max === undefined || max.value === -1 || (!hasSelected.value && max.value > 0)) {
       return false
     }
-    
+
     return iv.value.length >= max.value
   }
 
@@ -392,12 +394,13 @@ export default function useOptions (props, context, dep)
 
   // no export
   const appendOption = (option) => {
+    option.created = true
     ap.value.push(option)
   }
 
   // no export
   const filterGroups = (groups) => {
-    // If the search has value we need to filter among 
+    // If the search has value we need to filter among
     // he ones that are visible to the user to avoid
     // displaying groups which technically have options
     // based on search but that option is already selected.
@@ -412,7 +415,7 @@ export default function useOptions (props, context, dep)
   // no export
   const filterOptions = (options, excludeHideSelected = true) => {
     let fo = options
-    
+
     if (search.value && filterResults.value) {
       fo = fo.filter((option) => {
         return normalize(option[trackBy.value], strict.value).indexOf(normalize(search.value, strict.value)) !== -1
@@ -429,7 +432,7 @@ export default function useOptions (props, context, dep)
   // no export
   const optionsToArray = (options) => {
     let uo = options
-    
+
     // Transforming an object to an array of objects
     if (isObject(uo)) {
       uo = Object.keys(uo).map((key) => {
@@ -532,7 +535,7 @@ export default function useOptions (props, context, dep)
 
     initInternalValue()
   }
-  
+
   // ============== WATCHERS ==============
 
   if (delay.value > -1) {
