@@ -160,7 +160,7 @@
           >
             <slot name="option" :option="option" :search="search">
               <template v-if="option.newTag && !option.created">
-                <template v-if="options.isMax">
+                <template v-if="options.isMax()">
                   <span class="classList.tagError">Can only add {{ max }} tag(s) at most.</span>
                 </template>
                 <template v-else>
