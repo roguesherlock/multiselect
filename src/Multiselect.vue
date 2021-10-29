@@ -161,7 +161,7 @@
             <slot name="option" :option="option" :search="search" :isMax="isMax">
               <template v-if="option.newTag && !option.created">
                 <template v-if="isMax()">
-                  <span :class="classList.tagError">{{ tagErrorMessaage || `Can only add ${max} tag(s) at most.` }}</span>
+                  <span :class="classList.tagError">{{ tagErrorMessage || `Can only add ${max} tag(s) at most.` }}</span>
                 </template>
                 <template v-else>
                   <span>Create</span>
@@ -447,7 +447,7 @@
         required: false,
         default: 'text',
       },
-      tagErrorMessaage: {
+      tagErrorMessage: {
         type: String,
         required: false,
         default: null
