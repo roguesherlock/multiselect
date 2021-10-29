@@ -158,10 +158,10 @@
             @mouseenter="setPointer(option)"
             @click="handleOptionClick(option)"
           >
-            <slot name="option" :option="option" :search="search">
+            <slot name="option" :option="option" :search="search" :isMax="isMax">
               <template v-if="option.newTag && !option.created">
                 <template v-if="isMax()">
-                  <span :class="classList.tagError">Can only add {{ max }} tag(s) at most.</span>
+                  <span :class="classList.tagError">{{ tagErrorMessaage || `Can only add ${max} tag(s) at most.` }}</span>
                 </template>
                 <template v-else>
                   <span>Create</span>
@@ -446,6 +446,11 @@
         type: String,
         required: false,
         default: 'text',
+      },
+      tagErrorMessaage: {
+        type: String,
+        required: false,
+        default: null
       }
     },
     setup(props, context)
