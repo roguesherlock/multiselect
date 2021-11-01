@@ -39,7 +39,7 @@
             <span
               v-if="!disabled"
               :class="classList.tagRemove"
-              @mousedown.prevent="handleTagRemove(option, $event)"
+              @mousedown.capture.prevent.stop="handleTagRemove(option, $event)"
             >
               <span :class="classList.tagRemoveIcon"></span>
             </span>
@@ -150,29 +150,29 @@
           </li>
         </template>
         <template v-else>
-          <li
-            v-for="(option, i, key) in fo"
-            :class="classList.option(option)"
-            :key="key"
-            :data-pointed="isPointed(option)"
-            @mouseenter="setPointer(option)"
-            @click="handleOptionClick(option)"
-          >
-            <slot name="option" :option="option" :search="search" :isMax="isMax">
-              <template v-if="option.newTag && !option.created">
-                <template v-if="isMax()">
-                  <span :class="classList.tagError">{{ tagErrorMessage || `Can only add ${max} tag(s) at most.` }}</span>
-                </template>
-                <template v-else>
+          <li v-if="isMax()" :class="classList.noResults">
+            <span :class="classList.maxError">{{ maxErrorMessage || `Can only add ${max} tag(s) at most.` }}</span>
+          </li>
+          <template v-else>
+            <li
+              v-for="(option, i, key) in fo"
+              :class="classList.option(option)"
+              :key="key"
+              :data-pointed="isPointed(option)"
+              @mouseenter="setPointer(option)"
+              @click="handleOptionClick(option)"
+            >
+              <slot name="option" :option="option" :search="search" :isMax="isMax">
+                <template v-if="option.newTag && !option.created">
                   <span>Create</span>
                   <span :class="classList.tagSearch">
                     {{option[label]}}
                   </span>
                 </template>
-              </template>
-              <span v-else>{{ option[label] }}</span>
-            </slot>
-          </li>
+                <span v-else>{{ option[label] }}</span>
+              </slot>
+            </li>
+          </template>
         </template>
       </ul>
 
@@ -447,7 +447,7 @@
         required: false,
         default: 'text',
       },
-      tagErrorMessage: {
+      maxErrorMessage: {
         type: String,
         required: false,
         default: null

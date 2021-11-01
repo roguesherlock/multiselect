@@ -86,6 +86,7 @@ export default function useOptions (props, context, dep)
 
   // filteredOptions
   const fo = computed(() => {
+    if (isMax()) return []
     let options = eo.value
 
     if (createdTag.value.length) {
